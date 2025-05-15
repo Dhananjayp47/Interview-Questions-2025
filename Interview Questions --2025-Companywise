@@ -4,13 +4,108 @@ Interview questions year 2025-:
 
 Company:Techdome -:
 
-1)Kubernetes architecture
-2)Deployment vs stateful set
-3)Explain Docker networking and types of network. What is the default network.
-4)Terraform provisioners. 
-5)Terraform statefile
-6)Docker image vs container
-7)Docker bind mount vs volume 
+✅ 1) Kubernetes Architecture
+Kubernetes is based on a master-worker architecture, designed for container orchestration.
+🔹 Control Plane (Master Components):
+API Server (kube-apiserver): Entry point for REST commands; communicates with all components.
+etcd: Key-value store for cluster state and configs.
+Controller Manager: Maintains the desired state (e.g., deployments, replica sets).
+Scheduler: Assigns pods to appropriate worker nodes based on resources.
+🔹 Node Components (Worker Nodes):
+kubelet: Agent that ensures containers are running as per the spec.
+kube-proxy: Manages network rules for pod communication.
+Container Runtime: Software like Docker or containerd that runs containers.
+
+
+✅ 2) Deployment vs StatefulSet
+🔹 Deployment
+Manages stateless applications.
+Pods are interchangeable; no stable identity.
+Use shared persistent volumes if needed.
+Ideal for web servers, APIs, frontend apps.
+🔹 StatefulSet
+Manages stateful applications.
+Each pod has a unique identity and persistent volume.
+Pods start/stop in a defined order.
+Ideal for databases like MongoDB, Kafka, Cassandra.
+
+🆚 Key Differences
+Feature	Deployment	StatefulSet
+Pod Identity	Random names	Stable, ordered pod names (e.g., -0, -1)
+Storage	Shared Volumes	Dedicated volume per pod (PVC)
+Use Case	Stateless	Stateful apps needing persistence
+Update Method	Rolling updates	Ordered updates
+
+
+✅ 3) Docker Networking and Types
+Docker networking enables communication between containers and external systems.
+🔹 Types of Docker Networks
+Bridge (Default)
+Internal network for containers on the same host.
+Containers can communicate via IP or name.
+Host
+Container uses host’s network namespace.
+High performance, but no isolation.
+None
+Container is fully isolated with no network.
+Overlay
+Used in Docker Swarm for multi-host networking via VXLAN.
+Macvlan
+Assigns MAC address; container appears like a physical device on network.
+🔸 Default Network
+Bridge is the default network when you run:
+docker run nginx
+
+
+✅ 4) Terraform Provisioners
+Terraform provisioners allow you to run custom scripts or commands after resource creation.
+🔹 Types of Provisioners
+local-exec
+Executes command on the local machine running Terraform.
+remote-exec
+Executes command over SSH on the remote resource.
+file
+Uploads files to the remote machine.
+⚠️ Note:
+Best avoided for production.
+Prefer user-data or cloud-init for initialization tasks.
+✅ 5) Terraform Statefile
+The terraform.tfstate file tracks infrastructure managed by Terraform.
+🔹 Purpose
+Maps real-world resources to Terraform configs.
+Maintains the last known state for comparisons (terraform plan, apply).
+Required for idempotency and detecting drift.
+🔹 Storage Options
+Local (default)
+Remote: e.g., AWS S3 + DynamoDB for locking in teams.
+
+
+✅ 6) Docker Image vs Container
+Concept	Docker Image	Docker Container
+Definition	Blueprint or template	Running instance of the image
+State	Read-only	Writable, live execution
+Lifecycle	Created during docker build	Created and managed using docker run
+Use	Used to start containers	Executes the application
+
+
+✅ 7) Docker Bind Mount vs Volume
+Both provide persistent storage for Docker containers.
+🔹 Bind Mount
+Maps a host directory to a container path.
+Useful in development (live file sync).
+Example: /home/user/data:/app/data
+🔹 Volume
+Managed by Docker under /var/lib/docker/volumes/.
+Isolated from host directory structure.
+Best for production, easy to backup/migrate.
+
+🆚 Comparison Table
+Feature	         Bind                           Mount	Volume
+Location     	User-defined path on host       	Managed by Docker
+Performance	  Depends on host FS           	Optimized by Docker
+Portability  	Less portable	Easily         portable and backed up
+Use Case	     Dev/debug	                       Production-ready storage
+ 
 
 ==================================================================================>
 Company:LTIMindtree -:
